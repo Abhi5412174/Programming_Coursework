@@ -32,7 +32,7 @@ public class StoreGUI {
     private Color lableColor;
 
     // array list of store type
-    ArrayList<Store> stores = new ArrayList<>();
+    ArrayList<Store> stores = new ArrayList<Store>();
 
     public StoreGUI() {
         // making frame
@@ -213,7 +213,6 @@ public class StoreGUI {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
                 try {
                     // Convert inputs to appropriate types
                     int storeId = Integer.parseInt(storeIdText);
