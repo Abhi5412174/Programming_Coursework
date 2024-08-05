@@ -46,7 +46,7 @@ public class Department extends Store {
     }
 
     // Method to calculate selling price and update attributes
-    public double calculateDiscountPrice(boolean isInSales, double markedPrice) {
+    public void calculateDiscountPrice(boolean isInSales, double markedPrice) {
         this.isInSales = isInSales;
         // If the product is available for sale, calculate discount and update selling
         // price
@@ -70,8 +70,7 @@ public class Department extends Store {
         } else {
             // If the product is not available for sale, set selling price to marked price
             sellingPrice = markedPrice;
-        }
-        return sellingPrice;
+        } 
     }
 
     // Method override to display department details

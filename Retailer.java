@@ -75,6 +75,7 @@ public class Retailer extends Store {
         System.out.println("VAT Inclusive Price: " + vatInclusivePrice);
         System.out.println("Loyalty Point: " + loyaltyPoint);
         System.out.println("Purchased Year: " + purchasedYear);
+        System.out.println("Is Payment Online: "+isPaymentOnline);
         if (vatInclusivePrice == 0 && loyaltyPoint == 0 && !isPaymentOnline) {
             System.out.println("Product has been removed.");
         }

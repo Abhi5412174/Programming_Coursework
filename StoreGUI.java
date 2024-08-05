@@ -232,7 +232,7 @@ public class StoreGUI {
                     if (idExists) {
                         JOptionPane.showMessageDialog(frame,
                                 "Store ID already exists. Please choose a different ID.",
-                                "Input Error", JOptionPane.ERROR_MESSAGE);
+                                "ERROR", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
@@ -417,7 +417,7 @@ public class StoreGUI {
                         totalSalesText.isEmpty() || totalDiscountText.isEmpty() || vatInclusivePriceText.isEmpty() ||
                         purchasedYear == null) {
 
-                    JOptionPane.showMessageDialog(frame, "Please fill in all required fields.", "Input Error",
+                    JOptionPane.showMessageDialog(frame, "Please fill in all required fields.", "ERROR",
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -459,7 +459,7 @@ public class StoreGUI {
                     JOptionPane.showMessageDialog(frame, "Please enter valid numbers for the numeric fields.",
                             "Input Error", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception a) {
-                    JOptionPane.showMessageDialog(frame, "Unexpected Error Occur.",
+                    JOptionPane.showMessageDialog(frame, "Unexpected Error Occur.\n Try Again!",
                             "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -478,8 +478,8 @@ public class StoreGUI {
 
         // adding all labels in set loyalty panel:
         // set loyalty top label along with its text fields
-        setLoyalltyPointPanelLabel = new JLabel("Set Loyalty Point Here:");
-        setLoyalltyPointPanelLabel.setBounds(130, 10, 200, 30);
+        setLoyalltyPointPanelLabel = new JLabel("Set Loyalty Point of Retailer:");
+        setLoyalltyPointPanelLabel.setBounds(100, 10, 300, 30);
         setLoyalltyPointPanelLabel.setForeground(lableColor);
         setLoyalltyPointPanelLabel.setFont(titleFont2);
         setLoyaltyPointPanel.add(setLoyalltyPointPanelLabel);
@@ -582,9 +582,6 @@ public class StoreGUI {
                     if (!storeFound) {
                         JOptionPane.showMessageDialog(frame, "Store ID not found or is not a Retailer.", "ERROR",
                                 JOptionPane.ERROR_MESSAGE);
-                    } else if (!isPaymentOnline) {
-                        JOptionPane.showMessageDialog(frame, "Loyalty points cannot be set as payment is not online.",
-                                "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } catch (NumberFormatException ex) {
@@ -607,8 +604,8 @@ public class StoreGUI {
 
         // adding all labels in calculate discount panel:
         // calculate discount top label along with its text fields
-        discountPanelLabel = new JLabel("Calculate Discount Here:");
-        discountPanelLabel.setBounds(130, 8, 200, 30);
+        discountPanelLabel = new JLabel("Calculate Discount Of Department:");
+        discountPanelLabel.setBounds(95, 5, 300, 30);
         discountPanelLabel.setForeground(lableColor);
         discountPanelLabel.setFont(titleFont2);
         calculateDiscountPanel.add(discountPanelLabel);
@@ -674,10 +671,10 @@ public class StoreGUI {
                                 // Check if the department is in sale
                                 if (isInSale.isSelected()) {
                                     // Calculate discount price
-                                    double discountPrice = department.calculateDiscountPrice(isInSale.isSelected(),
+                                    department.calculateDiscountPrice(isInSale.isSelected(),
                                             markedPrice);
                                     JOptionPane.showMessageDialog(frame,
-                                            "Discount Price for Store ID " + storeId + ": " + discountPrice,
+                                            "Discount Price Calculated for Store ID " + storeId,
                                             "Discount Calculated", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     JOptionPane.showMessageDialog(frame,
@@ -722,8 +719,8 @@ public class StoreGUI {
 
         // adding all labels in remove product pannel:
         // remove product top label along with its text fields
-        removeProdictPanelLabel = new JLabel("Remove Product Here:");
-        removeProdictPanelLabel.setBounds(130, 10, 200, 30);
+        removeProdictPanelLabel = new JLabel("Remove Product of Retailer:");
+        removeProdictPanelLabel.setBounds(100, 10, 300, 30);
         removeProdictPanelLabel.setForeground(lableColor);
         removeProdictPanelLabel.setFont(titleFont2);
         removeProductPanel.add(removeProdictPanelLabel);
@@ -924,43 +921,16 @@ public class StoreGUI {
                     return;
                 }
 
-                // Initialize message and terminal output strings
-                StringBuilder message = new StringBuilder();
-                StringBuilder terminalOutput = new StringBuilder();
-
+                // Iterate over the list and display each store's details
                 for (Store store : stores) {
-                    // Create a base store details string
-                    String storeDetails = "Store ID: " + store.getStoreId() + "\n" +
-                            "Store Name: " + store.getStoreName() + "\n" +
-                            "Location: " + store.getLocation() + "\n" +
-                            "Opening Hour: " + store.getOpeningHour() + "\n" +
-                            "Total Sales: " + store.getTotalSales() + "\n" +
-                            "Total Discount: " + store.getTotalDiscount() + "\n";
-
-                    if (store instanceof Department) {
-                        Department department = (Department) store;
-                        storeDetails += "Product Name: " + department.getProductName() + "\n" +
-                                "Marked Price: " + department.getMarkedPrice() + "\n";
-                    } else if (store instanceof Retailer) {
-                        Retailer retailer = (Retailer) store;
-                        storeDetails += "VAT Inclusive Price: " + retailer.getVatInclusivePrice() + "\n" +
-                                "Is Payment Online: " + retailer.isPaymentOnline() + "\n" +
-                                "Purchased Year: " + retailer.getPurchasedYear() + "\n";
-                    }
-
-                    // Append the details to the message and terminal output
-                    storeDetails += "\n";
-                    message.append(storeDetails);
-                    terminalOutput.append(storeDetails);
+                    System.out.println("\n-------------------------------------------------");
+                    // Calls the appropriate display method depending on the actual object type
+                    store.display();
+                    System.out.println("-------------------------------------------------\n");
                 }
-
                 // Display all store details in a JOptionPane dialog
-                JOptionPane.showMessageDialog(frame, message.toString(), "Store Details",
+                JOptionPane.showMessageDialog(frame, "Store Details are printed in the terminal", "Store Details",
                         JOptionPane.INFORMATION_MESSAGE);
-
-                // Display all store details in the terminal
-                System.out.println("Store Details:");
-                System.out.println(terminalOutput.toString());
             }
         });
 
