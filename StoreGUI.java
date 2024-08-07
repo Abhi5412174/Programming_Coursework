@@ -8,12 +8,15 @@ import javax.swing.border.LineBorder;
 
 public class StoreGUI {
 
+    // JFrame to hold the main application window
     private JFrame frame;
+    // JLabels for various sections and labels in the UI
     private JLabel mainHeading, mainHeading1, mainHeading2, storeId, storeName, location, openingHour, totalSales,
             totalDiscount, productName, markedPrice, vatInsclusivePrice, labelisPaymentOnline, purchasedYear,
             isinsalelaLabel,
             setLoyalltyPointPanelLabel, discountPanelLabel, removeProdictPanelLabel;
 
+    // JTextFields for user input in different sections
     private JTextField storeIdFieldForDepartment, storeIdFieldForRetailer, storeIdFieldForSetLoyaltyPoint,
             storeIdFieldForCalculateDiscount, storeIdFieldForRemoveProduct, storeNameFieldForDepartment,
             storeNameFieldForRetailer, locationFieldForDepartment, locationFieldForRetailer,
@@ -22,13 +25,19 @@ public class StoreGUI {
             totalDiscountFieldForDepartment, totalDiscountFieldForRetailer, productNameField, markedPriceField,
             vatFieldForRetailer, vatFieldForSetLoyaltyPoint;
 
+    // JCheckBoxes for boolean options
     private JCheckBox isPaymentOnlineForRetailer, isPaymentOnlineForSetLoyaltyPoint, isInSale;
+    // JComboBox for selecting the purchased year
     private JComboBox<String> purchasedYearCombo;
+    // JButtons for various actions
     private JButton addDepartmentButton, addRetailerButton, calculateDiscountButton, setLoyaltyButton,
             removeProductButton, displayButton, clearButton;
-    private JPanel departmentPanel, retailerPanel, bottomPanel, setLoyaltyPointPanel, removeProductPanel,
+    // JPanels to organize different sections of the GUI
+    private JPanel mainPanel, departmentPanel, retailerPanel, bottomPanel, setLoyaltyPointPanel, removeProductPanel,
             calculateDiscountPanel;
+    // Fonts for titles and labels
     private Font titleFont, titleFont2, labelFont;
+    // Color for labels
     private Color lableColor;
 
     // array list of store type
@@ -57,7 +66,7 @@ public class StoreGUI {
         frame.add(mainHeading);
 
         // main pannel for background color
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setBounds(0, 0, 1525, 850);
         mainPanel.setBackground(Color.decode("#222831"));
         mainPanel.setLayout(null);
@@ -415,7 +424,7 @@ public class StoreGUI {
                 // Check for empty fields
                 if (storeIdText.isEmpty() || storeName.isEmpty() || location.isEmpty() || openingHour.isEmpty() ||
                         totalSalesText.isEmpty() || totalDiscountText.isEmpty() || vatInclusivePriceText.isEmpty() ||
-                        purchasedYear == null) {
+                        purchasedYear == "Year") {
 
                     JOptionPane.showMessageDialog(frame, "Please fill in all required fields.", "ERROR",
                             JOptionPane.ERROR_MESSAGE);

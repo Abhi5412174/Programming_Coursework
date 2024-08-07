@@ -67,10 +67,12 @@ public class Department extends Store {
             setTotalDiscount(discountAmount);
             // Assuming selling price is added to total sales
             setTotalSales(sellingPrice);
+            // the attribute isInSales is set to false.
+            this.isInSales = false;
         } else {
             // If the product is not available for sale, set selling price to marked price
             sellingPrice = markedPrice;
-        } 
+        }
     }
 
     // Method override to display department details
