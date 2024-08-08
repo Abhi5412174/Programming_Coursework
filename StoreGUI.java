@@ -474,8 +474,8 @@ public class StoreGUI {
             }
         });
 
-        // --------------------------------------------end retailer
-        // panel--------------------------
+        // <---------------------------------------end retailer
+        // panel-------------------------->
 
         // adding set loyalty panel
         setLoyaltyPointPanel = new JPanel();
@@ -565,23 +565,22 @@ public class StoreGUI {
                             Retailer retailer = (Retailer) store;
 
                             // Provide a confirmation message showing details
-                            int confirmation = JOptionPane.showConfirmDialog(frame,
+                            int sure = JOptionPane.showConfirmDialog(frame,
                                     "Are you sure you want to set the loyalty points for Store ID " + storeId +
                                             "\nVAT Inclusive Price: " + vatInclusivePrice +
                                             "\nPayment Online: " + isPaymentOnline,
                                     "Confirmation", JOptionPane.YES_NO_OPTION);
 
-                            if (confirmation == JOptionPane.YES_OPTION) {
+                            if (sure == JOptionPane.YES_OPTION) {
                                 // Set loyalty points
                                 retailer.setLoyaltyPoint(isPaymentOnline, vatInclusivePrice);
                                 JOptionPane.showMessageDialog(frame,
                                         "Loyalty points set successfully for Store ID " + storeId, "Success",
                                         JOptionPane.INFORMATION_MESSAGE);
                             } else {
-                                JOptionPane.showMessageDialog(frame, "Operation canceled.", "Cancelled",
+                                JOptionPane.showMessageDialog(frame, "Operation canceled.", "Cancelled!",
                                         JOptionPane.INFORMATION_MESSAGE);
                             }
-
                             storeFound = true;
                             break;
                         }
@@ -600,8 +599,8 @@ public class StoreGUI {
             }
         });
 
-        // ---------------------------------setLoyalltyPointPanel end here
-        // -------------------------
+        // <---------------------------------setLoyalltyPointPanel end here
+        // ------------------------->
 
         // adding calculate discount panel
         calculateDiscountPanel = new JPanel();
@@ -715,8 +714,7 @@ public class StoreGUI {
             }
         });
 
-        // -------------------------------------------calculateDiscountPanel ends here
-        // --------------------
+        // <------------------------------------calculateDiscountPanel ends here------------------------->
 
         // adding remove product pannel
         removeProductPanel = new JPanel();
@@ -777,14 +775,14 @@ public class StoreGUI {
                                 Retailer retailer = (Retailer) store;
 
                                 // Provide confirmation message
-                                int confirmation = JOptionPane.showConfirmDialog(frame,
+                                int sure = JOptionPane.showConfirmDialog(frame,
                                         "Are you sure you want to remove the product from Store ID " + storeId +
                                                 "\nVAT Inclusive Price: " + retailer.getVatInclusivePrice() +
                                                 "\nLoyalty Points: " + retailer.getLoyaltyPoint() +
                                                 "\nPurchased Year: " + retailer.getPurchasedYear(),
                                         "Confirm", JOptionPane.YES_NO_OPTION);
 
-                                if (confirmation == JOptionPane.YES_OPTION) {
+                                if (sure == JOptionPane.YES_OPTION) {
                                     // Check conditions for removing product
                                     if (retailer.getLoyaltyPoint() == 0 &&
                                             (retailer.getPurchasedYear().equals("2020") ||
@@ -831,8 +829,8 @@ public class StoreGUI {
             }
         });
 
-        // --------------------------------------removeProductPanel ends here
-        // -------------------------
+        // <--------------------------------------removeProductPanel ends here
+        // ------------------------>
         // adding bottom panel
         bottomPanel = new JPanel();
         bottomPanel.setBounds(365, 640, 850, 130);
@@ -929,7 +927,6 @@ public class StoreGUI {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
                 // Iterate over the list and display each store's details
                 for (Store store : stores) {
                     System.out.println("\n-------------------------------------------------");
