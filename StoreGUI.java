@@ -204,65 +204,7 @@ public class StoreGUI {
         addDepartmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                // Retrieve input fields
-                String storeIdText = storeIdFieldForDepartment.getText();
-                String storeName = storeNameFieldForDepartment.getText();
-                String location = locationFieldForDepartment.getText();
-                String openingHour = openingHourFieldForDepartment.getText();
-                String totalSalesText = totalSalesFieldForDepartment.getText();
-                String totalDiscountText = totalDiscountFieldForDepartment.getText();
-                String productName = productNameField.getText();
-                String markedPriceText = markedPriceField.getText();
-
-                // Validate inputs
-                if (storeIdText.isEmpty() || storeName.isEmpty() || location.isEmpty() ||
-                        openingHour.isEmpty() || totalSalesText.isEmpty() ||
-                        totalDiscountText.isEmpty() || productName.isEmpty() || markedPriceText.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Please fill in all fields.", "Input Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                try {
-                    // Convert inputs to appropriate types
-                    int storeId = Integer.parseInt(storeIdText);
-                    double totalSales = Double.parseDouble(totalSalesText);
-                    double totalDiscount = Double.parseDouble(totalDiscountText);
-                    double markedPrice = Double.parseDouble(markedPriceText);
-
-                    // Check if the store ID already exists in the ArrayList
-                    boolean idExists = false;
-                    for (Store store : stores) {
-                        if (store.getStoreId() == storeId) {
-                            idExists = true;
-                            break;
-                        }
-                    }
-
-                    if (idExists) {
-                        JOptionPane.showMessageDialog(frame,
-                                "Store ID already exists. Please choose a different ID.",
-                                "ERROR", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    // Create a new Department object
-                    Department department = new Department(storeId, storeName, location, openingHour, totalSales,
-                            totalDiscount, productName, markedPrice);
-
-                    // Add the new Department object to the ArrayList
-                    stores.add(department);
-
-                    // Show confirmation message
-                    JOptionPane.showMessageDialog(frame, "Department added successfully.", "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
-
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(frame, "Invalid number format. Please check your input.",
-                            "Input Error", JOptionPane.ERROR_MESSAGE);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(frame, "An error occurred: \nTry again! " + e.getMessage(), "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                addDepartment();
             }
         });
 
@@ -410,67 +352,7 @@ public class StoreGUI {
         retailerPanel.add(addRetailerButton);
         addRetailerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                // Retrieve text from fields
-                String storeIdText = storeIdFieldForRetailer.getText();
-                String storeName = storeNameFieldForRetailer.getText();
-                String location = locationFieldForRetailer.getText();
-                String openingHour = openingHourFieldForRetailer.getText();
-                String totalSalesText = totalSalesFieldForRetailer.getText();
-                String totalDiscountText = totalDiscountFieldForRetailer.getText();
-                String vatInclusivePriceText = vatFieldForRetailer.getText();
-                boolean paymentOnline = isPaymentOnlineForRetailer.isSelected();
-                String purchasedYear = (String) purchasedYearCombo.getSelectedItem();
-
-                // Check for empty fields
-                if (storeIdText.isEmpty() || storeName.isEmpty() || location.isEmpty() || openingHour.isEmpty() ||
-                        totalSalesText.isEmpty() || totalDiscountText.isEmpty() || vatInclusivePriceText.isEmpty() ||
-                        purchasedYear == "Year") {
-
-                    JOptionPane.showMessageDialog(frame, "Please fill in all required fields.", "ERROR",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                try {
-                    // Parse numeric fields
-                    int storeId = Integer.parseInt(storeIdText);
-                    double totalSales = Double.parseDouble(totalSalesText);
-                    double totalDiscount = Double.parseDouble(totalDiscountText);
-                    double vatInclusivePrice = Double.parseDouble(vatInclusivePriceText);
-
-                    // Check if the store ID already exists in the ArrayList
-                    boolean idExists = false;
-                    for (Store store : stores) {
-                        if (store.getStoreId() == storeId) {
-                            idExists = true;
-                            break;
-                        }
-                    }
-
-                    if (idExists) {
-                        JOptionPane.showMessageDialog(frame,
-                                "Store ID already exists. Please choose a different ID.",
-                                "Input Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    // Create Retailer object and add to stores list
-                    Retailer retailer = new Retailer(storeId, storeName, location, openingHour, totalSales,
-                            totalDiscount, vatInclusivePrice, paymentOnline, purchasedYear);
-                    stores.add(retailer);
-
-                    // Show confirmation message
-                    JOptionPane.showMessageDialog(frame, "Retailer added successfully.", "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
-
-                } catch (NumberFormatException e) {
-                    // Handle invalid number format
-                    JOptionPane.showMessageDialog(frame, "Please enter valid numbers for the numeric fields.",
-                            "Input Error", JOptionPane.ERROR_MESSAGE);
-                } catch (Exception a) {
-                    JOptionPane.showMessageDialog(frame, "Unexpected Error Occur.\n Try Again!",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                addRetailer();
             }
         });
 
@@ -542,60 +424,7 @@ public class StoreGUI {
         setLoyaltyPointPanel.add(setLoyaltyButton);
         setLoyaltyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    // Retrieve and validate input fields
-                    String storeIdText = storeIdFieldForSetLoyaltyPoint.getText();
-                    String vatText = vatFieldForSetLoyaltyPoint.getText();
-                    boolean isPaymentOnline = isPaymentOnlineForSetLoyaltyPoint.isSelected();
-
-                    if (storeIdText.isEmpty() || vatText.isEmpty()) {
-                        JOptionPane.showMessageDialog(frame, "Please fill in all required fields.", "Input Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    // Parse numeric fields
-                    int storeId = Integer.parseInt(storeIdText);
-                    double vatInclusivePrice = Double.parseDouble(vatText);
-
-                    // Find the store and set loyalty points
-                    boolean storeFound = false;
-                    for (Store store : stores) {
-                        if (store instanceof Retailer && store.getStoreId() == storeId) {
-                            Retailer retailer = (Retailer) store;
-
-                            // Provide a confirmation message showing details
-                            int sure = JOptionPane.showConfirmDialog(frame,
-                                    "Are you sure you want to set the loyalty points for Store ID " + storeId +
-                                            "\nVAT Inclusive Price: " + vatInclusivePrice +
-                                            "\nPayment Online: " + isPaymentOnline,
-                                    "Confirmation", JOptionPane.YES_NO_OPTION);
-
-                            if (sure == JOptionPane.YES_OPTION) {
-                                // Set loyalty points
-                                retailer.setLoyaltyPoint(isPaymentOnline, vatInclusivePrice);
-                                JOptionPane.showMessageDialog(frame,
-                                        "Loyalty points set successfully for Store ID " + storeId, "Success",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            } else {
-                                JOptionPane.showMessageDialog(frame, "Operation canceled.", "Cancelled!",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            }
-                            storeFound = true;
-                            break;
-                        }
-                    }
-
-                    // Handle cases where store ID is not found or is not a Retailer
-                    if (!storeFound) {
-                        JOptionPane.showMessageDialog(frame, "Store ID not found or is not a Retailer.", "ERROR",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Please enter valid numerical values.", "Input Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                setLoyalltyPoint();
             }
         });
 
@@ -654,67 +483,12 @@ public class StoreGUI {
         calculateDiscountPanel.add(calculateDiscountButton);
         calculateDiscountButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    // Retrieve and validate input fields
-                    String storeIdText = storeIdFieldForCalculateDiscount.getText();
-                    String markedPriceText = markedPriceField.getText();
-
-                    if (storeIdText.isEmpty() || markedPriceText.isEmpty()) {
-                        JOptionPane.showMessageDialog(frame, "Please fill in all fields.", "Input Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    // Parse numeric fields
-                    int storeId = Integer.parseInt(storeIdText);
-                    double markedPrice = Double.parseDouble(markedPriceText);
-
-                    // Check if the store ID exists and is a Department
-                    boolean storeFound = false;
-                    for (Store store : stores) {
-                        if (store.getStoreId() == storeId) {
-                            if (store instanceof Department) {
-                                Department department = (Department) store;
-
-                                // Check if the department is in sale
-                                if (isInSale.isSelected()) {
-                                    // Calculate discount price
-                                    department.calculateDiscountPrice(isInSale.isSelected(),
-                                            markedPrice);
-                                    JOptionPane.showMessageDialog(frame,
-                                            "Discount Price Calculated for Store ID " + storeId,
-                                            "Discount Calculated", JOptionPane.INFORMATION_MESSAGE);
-                                } else {
-                                    JOptionPane.showMessageDialog(frame,
-                                            "Discount calculation is only allowed if the store is in sale.",
-                                            "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-                                }
-
-                                storeFound = true;
-                                break;
-                            } else {
-                                JOptionPane.showMessageDialog(frame,
-                                        "Store ID exists but is not a Department.", "Invalid Store Type",
-                                        JOptionPane.ERROR_MESSAGE);
-                                return;
-                            }
-                        }
-                    }
-
-                    // Handle cases where store ID is not found
-                    if (!storeFound) {
-                        JOptionPane.showMessageDialog(frame, "Store ID not found.", "Store Not Found",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Invalid number format. Please check your input.",
-                            "Input Error", JOptionPane.ERROR_MESSAGE);
-                }
+                calculateDiscount();
             }
         });
 
-        // <------------------------------------calculateDiscountPanel ends here------------------------->
+        // <------------------------------------calculateDiscountPanel ends
+        // here------------------------->
 
         // adding remove product pannel
         removeProductPanel = new JPanel();
@@ -755,77 +529,7 @@ public class StoreGUI {
         removeProductPanel.add(removeProductButton);
         removeProductButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    // Retrieve and validate input field
-                    String storeIdText = storeIdFieldForRemoveProduct.getText();
-                    if (storeIdText.isEmpty()) {
-                        JOptionPane.showMessageDialog(frame, "Please fill in the Store ID.", "Input Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    // Parse the store ID
-                    int storeId = Integer.parseInt(storeIdText);
-                    boolean storeFound = false;
-
-                    // Search for the store with the given ID
-                    for (Store store : stores) {
-                        if (store.getStoreId() == storeId) {
-                            if (store instanceof Retailer) {
-                                Retailer retailer = (Retailer) store;
-
-                                // Provide confirmation message
-                                int sure = JOptionPane.showConfirmDialog(frame,
-                                        "Are you sure you want to remove the product from Store ID " + storeId +
-                                                "\nVAT Inclusive Price: " + retailer.getVatInclusivePrice() +
-                                                "\nLoyalty Points: " + retailer.getLoyaltyPoint() +
-                                                "\nPurchased Year: " + retailer.getPurchasedYear(),
-                                        "Confirm", JOptionPane.YES_NO_OPTION);
-
-                                if (sure == JOptionPane.YES_OPTION) {
-                                    // Check conditions for removing product
-                                    if (retailer.getLoyaltyPoint() == 0 &&
-                                            (retailer.getPurchasedYear().equals("2020") ||
-                                                    retailer.getPurchasedYear().equals("2021") ||
-                                                    retailer.getPurchasedYear().equals("2022"))) {
-                                        try {
-                                            retailer.removeProduct();
-                                            JOptionPane.showMessageDialog(frame,
-                                                    "Product removed successfully from Store ID " + storeId,
-                                                    "Success", JOptionPane.INFORMATION_MESSAGE);
-                                        } catch (Exception e) {
-                                            JOptionPane.showMessageDialog(frame,
-                                                    "Error removing product: " + e.getMessage(),
-                                                    "Error", JOptionPane.ERROR_MESSAGE);
-                                        }
-                                    } else {
-                                        JOptionPane.showMessageDialog(frame,
-                                                "Product cannot be removed. Ensure loyalty points are zero and purchased year is valid.",
-                                                "Error", JOptionPane.ERROR_MESSAGE);
-                                    }
-                                } else {
-                                    JOptionPane.showMessageDialog(frame, "Operation cancelled.", "Cancelled",
-                                            JOptionPane.INFORMATION_MESSAGE);
-                                }
-
-                                storeFound = true;
-                                break;
-                            } else {
-                                JOptionPane.showMessageDialog(frame,
-                                        "Store ID is not a Retailer.", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                return;
-                            }
-                        }
-                    }
-
-                    if (!storeFound) {
-                        JOptionPane.showMessageDialog(frame, "Store ID not found.", "ERROR",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(frame, "Invalid Store ID. Please enter a valid number.", "ERROR",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                removeProduct();
             }
         });
 
@@ -850,67 +554,7 @@ public class StoreGUI {
         bottomPanel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                boolean isAnyFieldNotEmpty = !storeIdFieldForDepartment.getText().isEmpty() ||
-                        !storeNameFieldForDepartment.getText().isEmpty() ||
-                        !locationFieldForDepartment.getText().isEmpty() ||
-                        !openingHourFieldForDepartment.getText().isEmpty() ||
-                        !totalSalesFieldForDepartment.getText().isEmpty() ||
-                        !totalDiscountFieldForDepartment.getText().isEmpty() ||
-                        !productNameField.getText().isEmpty() ||
-                        !markedPriceField.getText().isEmpty() ||
-                        !storeIdFieldForRetailer.getText().isEmpty() ||
-                        !storeNameFieldForRetailer.getText().isEmpty() ||
-                        !locationFieldForRetailer.getText().isEmpty() ||
-                        !openingHourFieldForRetailer.getText().isEmpty() ||
-                        !totalSalesFieldForRetailer.getText().isEmpty() ||
-                        !totalDiscountFieldForRetailer.getText().isEmpty() ||
-                        !vatFieldForRetailer.getText().isEmpty() ||
-                        isPaymentOnlineForRetailer.isSelected() ||
-                        purchasedYearCombo.getSelectedIndex() != 0 ||
-                        !storeIdFieldForSetLoyaltyPoint.getText().isEmpty() ||
-                        !vatFieldForSetLoyaltyPoint.getText().isEmpty() ||
-                        isPaymentOnlineForSetLoyaltyPoint.isSelected() ||
-                        !storeIdFieldForCalculateDiscount.getText().isEmpty() ||
-                        isInSale.isSelected() ||
-                        !storeIdFieldForRemoveProduct.getText().isEmpty();
-
-                if (isAnyFieldNotEmpty) {
-                    // Clear department panel fields
-                    storeIdFieldForDepartment.setText("");
-                    storeNameFieldForDepartment.setText("");
-                    locationFieldForDepartment.setText("");
-                    openingHourFieldForDepartment.setText("");
-                    totalSalesFieldForDepartment.setText("");
-                    totalDiscountFieldForDepartment.setText("");
-                    productNameField.setText("");
-                    markedPriceField.setText("");
-
-                    // Clear retailer panel fields
-                    storeIdFieldForRetailer.setText("");
-                    storeNameFieldForRetailer.setText("");
-                    locationFieldForRetailer.setText("");
-                    openingHourFieldForRetailer.setText("");
-                    totalSalesFieldForRetailer.setText("");
-                    totalDiscountFieldForRetailer.setText("");
-                    vatFieldForRetailer.setText("");
-                    isPaymentOnlineForRetailer.setSelected(false);
-                    purchasedYearCombo.setSelectedIndex(0);
-
-                    // Clear set loyalty point panel fields
-                    storeIdFieldForSetLoyaltyPoint.setText("");
-                    vatFieldForSetLoyaltyPoint.setText("");
-                    isPaymentOnlineForSetLoyaltyPoint.setSelected(false);
-
-                    // Clear calculate discount panel fields
-                    storeIdFieldForCalculateDiscount.setText("");
-                    isInSale.setSelected(false);
-
-                    // Clear remove product panel fields
-                    storeIdFieldForRemoveProduct.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Fields are already cleared.", "Message",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+                clear();
             }
         });
         // display buutton:
@@ -921,22 +565,7 @@ public class StoreGUI {
         bottomPanel.add(displayButton);
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                // Check if the stores list is empty
-                if (stores.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "No stores have been added.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                // Iterate over the list and display each store's details
-                for (Store store : stores) {
-                    System.out.println("\n-------------------------------------------------");
-                    // Calls the appropriate display method depending on the actual object type
-                    store.display();
-                    System.out.println("-------------------------------------------------\n");
-                }
-                // Display all store details in a JOptionPane dialog
-                JOptionPane.showMessageDialog(frame, "Store Details are printed in the terminal", "Store Details",
-                        JOptionPane.INFORMATION_MESSAGE);
+                display();
             }
         });
 
@@ -948,5 +577,407 @@ public class StoreGUI {
 
     public static void main(String[] args) {
         new StoreGUI();
+    }
+
+    public void addDepartment() {
+        // Retrieve input fields
+        String storeIdText = storeIdFieldForDepartment.getText();
+        String storeName = storeNameFieldForDepartment.getText();
+        String location = locationFieldForDepartment.getText();
+        String openingHour = openingHourFieldForDepartment.getText();
+        String totalSalesText = totalSalesFieldForDepartment.getText();
+        String totalDiscountText = totalDiscountFieldForDepartment.getText();
+        String productName = productNameField.getText();
+        String markedPriceText = markedPriceField.getText();
+
+        // Validate inputs
+        if (storeIdText.isEmpty() || storeName.isEmpty() || location.isEmpty() ||
+                openingHour.isEmpty() || totalSalesText.isEmpty() ||
+                totalDiscountText.isEmpty() || productName.isEmpty() || markedPriceText.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Please fill in all fields.", "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            // Convert inputs to appropriate types
+            int storeId = Integer.parseInt(storeIdText);
+            double totalSales = Double.parseDouble(totalSalesText);
+            double totalDiscount = Double.parseDouble(totalDiscountText);
+            double markedPrice = Double.parseDouble(markedPriceText);
+
+            // Check if the store ID already exists in the ArrayList
+            boolean idExists = false;
+            for (Store store : stores) {
+                if (store.getStoreId() == storeId) {
+                    idExists = true;
+                    break;
+                }
+            }
+
+            if (idExists) {
+                JOptionPane.showMessageDialog(frame,
+                        "Store ID already exists. Please choose a different ID.",
+                        "ERROR", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create a new Department object
+            Department department = new Department(storeId, storeName, location, openingHour, totalSales,
+                    totalDiscount, productName, markedPrice);
+
+            // Add the new Department object to the ArrayList
+            stores.add(department);
+
+            // Show confirmation message
+            JOptionPane.showMessageDialog(frame, "Department added successfully.", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid number format. Please check your input.",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(frame, "An error occurred: \nTry again! " + e.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void addRetailer() {
+        // Retrieve text from fields
+        String storeIdText = storeIdFieldForRetailer.getText();
+        String storeName = storeNameFieldForRetailer.getText();
+        String location = locationFieldForRetailer.getText();
+        String openingHour = openingHourFieldForRetailer.getText();
+        String totalSalesText = totalSalesFieldForRetailer.getText();
+        String totalDiscountText = totalDiscountFieldForRetailer.getText();
+        String vatInclusivePriceText = vatFieldForRetailer.getText();
+        boolean paymentOnline = isPaymentOnlineForRetailer.isSelected();
+        String purchasedYear = (String) purchasedYearCombo.getSelectedItem();
+
+        // Check for empty fields
+        if (storeIdText.isEmpty() || storeName.isEmpty() || location.isEmpty() || openingHour.isEmpty() ||
+                totalSalesText.isEmpty() || totalDiscountText.isEmpty() || vatInclusivePriceText.isEmpty() ||
+                purchasedYear == "Year") {
+
+            JOptionPane.showMessageDialog(frame, "Please fill in all required fields.", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Parse numeric fields
+            int storeId = Integer.parseInt(storeIdText);
+            double totalSales = Double.parseDouble(totalSalesText);
+            double totalDiscount = Double.parseDouble(totalDiscountText);
+            double vatInclusivePrice = Double.parseDouble(vatInclusivePriceText);
+
+            // Check if the store ID already exists in the ArrayList
+            boolean idExists = false;
+            for (Store store : stores) {
+                if (store.getStoreId() == storeId) {
+                    idExists = true;
+                    break;
+                }
+            }
+
+            if (idExists) {
+                JOptionPane.showMessageDialog(frame,
+                        "Store ID already exists. Please choose a different ID.",
+                        "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create Retailer object and add to stores list
+            Retailer retailer = new Retailer(storeId, storeName, location, openingHour, totalSales,
+                    totalDiscount, vatInclusivePrice, paymentOnline, purchasedYear);
+            stores.add(retailer);
+
+            // Show confirmation message
+            JOptionPane.showMessageDialog(frame, "Retailer added successfully.", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException e) {
+            // Handle invalid number format
+            JOptionPane.showMessageDialog(frame, "Please enter valid numbers for the numeric fields.",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception a) {
+            JOptionPane.showMessageDialog(frame, "Unexpected Error Occur.\n Try Again!",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    public void setLoyalltyPoint() {
+        try {
+            // Retrieve and validate input fields
+            String storeIdText = storeIdFieldForSetLoyaltyPoint.getText();
+            String vatText = vatFieldForSetLoyaltyPoint.getText();
+            boolean isPaymentOnline = isPaymentOnlineForSetLoyaltyPoint.isSelected();
+
+            if (storeIdText.isEmpty() || vatText.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Please fill in all required fields.", "Input Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Parse numeric fields
+            int storeId = Integer.parseInt(storeIdText);
+            double vatInclusivePrice = Double.parseDouble(vatText);
+
+            // Find the store and set loyalty points
+            boolean storeFound = false;
+            for (Store store : stores) {
+                if (store instanceof Retailer && store.getStoreId() == storeId) {
+                    Retailer retailer = (Retailer) store;
+
+                    // Provide a confirmation message showing details
+                    int sure = JOptionPane.showConfirmDialog(frame,
+                            "Are you sure you want to set the loyalty points for Store ID " + storeId +
+                                    "\nVAT Inclusive Price: " + vatInclusivePrice +
+                                    "\nPayment Online: " + isPaymentOnline,
+                            "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                    if (sure == JOptionPane.YES_OPTION) {
+                        // Set loyalty points
+                        retailer.setLoyaltyPoint(isPaymentOnline, vatInclusivePrice);
+                        JOptionPane.showMessageDialog(frame,
+                                "Loyalty points set successfully for Store ID " + storeId, "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Operation canceled.", "Cancelled!",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    storeFound = true;
+                    break;
+                }
+            }
+
+            // Handle cases where store ID is not found or is not a Retailer
+            if (!storeFound) {
+                JOptionPane.showMessageDialog(frame, "Store ID not found or is not a Retailer.", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(frame, "Please enter valid numerical values.", "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    public void calculateDiscount() {
+        try {
+            // Retrieve and validate input fields
+            String storeIdText = storeIdFieldForCalculateDiscount.getText();
+            String markedPriceText = markedPriceField.getText();
+
+            if (storeIdText.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Please fill in all fields.", "Input Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Parse numeric fields
+            int storeId = Integer.parseInt(storeIdText);
+            double markedPrice = Double.parseDouble(markedPriceText);
+
+            // Check if the store ID exists and is a Department
+            boolean storeFound = false;
+            for (Store store : stores) {
+                if (store.getStoreId() == storeId) {
+                    if (store instanceof Department) {
+                        Department department = (Department) store;
+
+                        // Check if the department is in sale
+                        if (isInSale.isSelected()) {
+                            // Calculate discount price
+                            department.calculateDiscountPrice(isInSale.isSelected(),
+                                    markedPrice);
+                            JOptionPane.showMessageDialog(frame,
+                                    "Discount Price Calculated for Store ID " + storeId,
+                                    "Discount Calculated", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(frame,
+                                    "Discount calculation is only allowed if the store is in sale.",
+                                    "Invalid Operation", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        storeFound = true;
+                        break;
+                    } else {
+                        JOptionPane.showMessageDialog(frame,
+                                "Store ID exists but is not a Department.", "Invalid Store Type",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            }
+
+            // Handle cases where store ID is not found
+            if (!storeFound) {
+                JOptionPane.showMessageDialog(frame, "Store ID not found.", "Store Not Found",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(frame, "Invalid number format. Please check your input.",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void removeProduct() {
+        try {
+            // Retrieve and validate input field
+            String storeIdText = storeIdFieldForRemoveProduct.getText();
+            if (storeIdText.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Please fill in the Store ID.", "Input Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Parse the store ID
+            int storeId = Integer.parseInt(storeIdText);
+            boolean storeFound = false;
+
+            // Search for the store with the given ID
+            for (Store store : stores) {
+                if (store.getStoreId() == storeId) {
+                    if (store instanceof Retailer) {
+                        Retailer retailer = (Retailer) store;
+
+                        // Provide confirmation message
+                        int sure = JOptionPane.showConfirmDialog(frame,
+                                "Are you sure you want to remove the product from Store ID " + storeId +
+                                        "\nVAT Inclusive Price: " + retailer.getVatInclusivePrice() +
+                                        "\nLoyalty Points: " + retailer.getLoyaltyPoint() +
+                                        "\nPurchased Year: " + retailer.getPurchasedYear(),
+                                "Confirm", JOptionPane.YES_NO_OPTION);
+
+                        if (sure == JOptionPane.YES_OPTION) {
+                            // Check conditions for removing product
+                            if (retailer.getLoyaltyPoint() == 0 &&
+                                    (retailer.getPurchasedYear().equals("2020") ||
+                                            retailer.getPurchasedYear().equals("2021") ||
+                                            retailer.getPurchasedYear().equals("2022"))) {
+                                try {
+                                    retailer.removeProduct();
+                                    JOptionPane.showMessageDialog(frame,
+                                            "Product removed successfully from Store ID " + storeId,
+                                            "Success", JOptionPane.INFORMATION_MESSAGE);
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(frame,
+                                            "Error removing product: " + e.getMessage(),
+                                            "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(frame,
+                                        "Product cannot be removed. Ensure loyalty points are zero and purchased year is valid.",
+                                        "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Operation cancelled.", "Cancelled",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                        }
+
+                        storeFound = true;
+                        break;
+                    } else {
+                        JOptionPane.showMessageDialog(frame,
+                                "Store ID is not a Retailer.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            }
+
+            if (!storeFound) {
+                JOptionPane.showMessageDialog(frame, "Store ID not found.", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid Store ID. Please enter a valid number.", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void clear() {
+        boolean isAnyFieldNotEmpty = !storeIdFieldForDepartment.getText().isEmpty() ||
+                !storeNameFieldForDepartment.getText().isEmpty() ||
+                !locationFieldForDepartment.getText().isEmpty() ||
+                !openingHourFieldForDepartment.getText().isEmpty() ||
+                !totalSalesFieldForDepartment.getText().isEmpty() ||
+                !totalDiscountFieldForDepartment.getText().isEmpty() ||
+                !productNameField.getText().isEmpty() ||
+                !markedPriceField.getText().isEmpty() ||
+                !storeIdFieldForRetailer.getText().isEmpty() ||
+                !storeNameFieldForRetailer.getText().isEmpty() ||
+                !locationFieldForRetailer.getText().isEmpty() ||
+                !openingHourFieldForRetailer.getText().isEmpty() ||
+                !totalSalesFieldForRetailer.getText().isEmpty() ||
+                !totalDiscountFieldForRetailer.getText().isEmpty() ||
+                !vatFieldForRetailer.getText().isEmpty() ||
+                isPaymentOnlineForRetailer.isSelected() ||
+                purchasedYearCombo.getSelectedIndex() != 0 ||
+                !storeIdFieldForSetLoyaltyPoint.getText().isEmpty() ||
+                !vatFieldForSetLoyaltyPoint.getText().isEmpty() ||
+                isPaymentOnlineForSetLoyaltyPoint.isSelected() ||
+                !storeIdFieldForCalculateDiscount.getText().isEmpty() ||
+                isInSale.isSelected() ||
+                !storeIdFieldForRemoveProduct.getText().isEmpty();
+
+        if (isAnyFieldNotEmpty) {
+            // Clear department panel fields
+            storeIdFieldForDepartment.setText("");
+            storeNameFieldForDepartment.setText("");
+            locationFieldForDepartment.setText("");
+            openingHourFieldForDepartment.setText("");
+            totalSalesFieldForDepartment.setText("");
+            totalDiscountFieldForDepartment.setText("");
+            productNameField.setText("");
+            markedPriceField.setText("");
+
+            // Clear retailer panel fields
+            storeIdFieldForRetailer.setText("");
+            storeNameFieldForRetailer.setText("");
+            locationFieldForRetailer.setText("");
+            openingHourFieldForRetailer.setText("");
+            totalSalesFieldForRetailer.setText("");
+            totalDiscountFieldForRetailer.setText("");
+            vatFieldForRetailer.setText("");
+            isPaymentOnlineForRetailer.setSelected(false);
+            purchasedYearCombo.setSelectedIndex(0);
+
+            // Clear set loyalty point panel fields
+            storeIdFieldForSetLoyaltyPoint.setText("");
+            vatFieldForSetLoyaltyPoint.setText("");
+            isPaymentOnlineForSetLoyaltyPoint.setSelected(false);
+
+            // Clear calculate discount panel fields
+            storeIdFieldForCalculateDiscount.setText("");
+            isInSale.setSelected(false);
+
+            // Clear remove product panel fields
+            storeIdFieldForRemoveProduct.setText("");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Fields are already cleared.", "Message",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public void display() {
+        // Check if the stores list is empty
+        if (stores.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "No stores have been added.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Iterate over the list and display each store's details
+        for (Store store : stores) {
+            System.out.println("\n-------------------------------------------------");
+            // Calls the appropriate display method depending on the actual object type
+            store.display();
+            System.out.println("-------------------------------------------------\n");
+        }
+        // Display all store details in a JOptionPane dialog
+        JOptionPane.showMessageDialog(frame, "Store Details are printed in the terminal", "Store Details",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }
