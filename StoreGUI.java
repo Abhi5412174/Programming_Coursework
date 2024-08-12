@@ -14,7 +14,7 @@ public class StoreGUI {
     private JLabel mainHeading, mainHeading1, mainHeading2, storeId, storeName, location, openingHour, totalSales,
             totalDiscount, productName, markedPrice, vatInsclusivePrice, labelisPaymentOnline, purchasedYear,
             isinsalelaLabel,
-            setLoyalltyPointPanelLabel, discountPanelLabel, removeProdictPanelLabel;
+            setLoyalltyPointPanelLabel, discountPanelLabel, removeProductPanelLabel;
 
     // JTextFields for user input in different sections
     private JTextField storeIdFieldForDepartment, storeIdFieldForRetailer, storeIdFieldForSetLoyaltyPoint,
@@ -500,11 +500,11 @@ public class StoreGUI {
 
         // adding all labels in remove product pannel:
         // remove product top label along with its text fields
-        removeProdictPanelLabel = new JLabel("Remove Product of Retailer:");
-        removeProdictPanelLabel.setBounds(100, 10, 300, 30);
-        removeProdictPanelLabel.setForeground(lableColor);
-        removeProdictPanelLabel.setFont(titleFont2);
-        removeProductPanel.add(removeProdictPanelLabel);
+        removeProductPanelLabel = new JLabel("Remove Product of Retailer:");
+        removeProductPanelLabel.setBounds(100, 10, 300, 30);
+        removeProductPanelLabel.setForeground(lableColor);
+        removeProductPanelLabel.setFont(titleFont2);
+        removeProductPanel.add(removeProductPanelLabel);
 
         // lables for store id
         storeId = new JLabel("Store ID:");
