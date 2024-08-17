@@ -778,64 +778,64 @@ public class StoreGUI {
 
     private void calculateDiscount() {
         try {
-            // Retrieve and validate input fields
+            // Retrieve and validate the Store ID input field
             String storeIdText = storeIdFieldForCalculateDiscount.getText();
-            String markedPriceText = markedPriceField.getText();
 
             if (storeIdText.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Please fill in all fields.", "Input Error",
+                JOptionPane.showMessageDialog(frame, "Please fill in the Store ID.", "Input Error",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Parse numeric fields
             int storeId = Integer.parseInt(storeIdText);
-            double markedPrice = Double.parseDouble(markedPriceText);
-            if (storeId <= 0 || markedPrice < 0) {
-                JOptionPane.showMessageDialog(frame, "Entered values should not be in negative or zero.", "ERROR",
+            if (storeId <= 0) {
+                JOptionPane.showMessageDialog(frame, "Entered Store ID should not be negative or zero.", "ERROR",
                         JOptionPane.ERROR_MESSAGE);
-            } else {
-                // Check if the store ID exists and is a Department
-                boolean storeFound = false;
-                for (Store store : stores) {
-                    if (store.getStoreId() == storeId) {
-                        if (store instanceof Department) {
-                            Department department = (Department) store;
+                return;
+            }
+            // Check if the store ID exists and is a Department
+            boolean storeFound = false;
+            for (Store store : stores) {
+                if (store.getStoreId() == storeId) {
+                    if (store instanceof Department) {
+                        Department department = (Department) store;
 
-                            // Check if the department is in sale
-                            if (isInSale.isSelected()) {
-                                // Calculate discount price
-                                department.calculateDiscountPrice(isInSale.isSelected(),
-                                        markedPrice);
-                                JOptionPane.showMessageDialog(frame,
-                                        "Discount Price Calculated for Store ID " + storeId,
-                                        "Discount Calculated", JOptionPane.INFORMATION_MESSAGE);
-                            } else {
-                                JOptionPane.showMessageDialog(frame,
-                                        "Discount calculation is only allowed if the store is in sale.",
-                                        "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-                            }
+                        // Get the marked price from the Department object
+                        double markedPrice = department.getMarkedPrice();
 
-                            storeFound = true;
-                            break;
+                        // Check if the department is in sale
+                        if (isInSale.isSelected()) {
+                            // Calculate discount price
+                            department.calculateDiscountPrice(isInSale.isSelected(), markedPrice);
+                            JOptionPane.showMessageDialog(frame,
+                                    "Discount Price Calculated for Store ID " + storeId,
+                                    "Discount Calculated", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(frame,
-                                    "Store ID exists but is not a Department.", "Invalid Store Type",
-                                    JOptionPane.ERROR_MESSAGE);
-                            return;
+                                    "Discount calculation is only allowed if the store is in sale.",
+                                    "Invalid Operation", JOptionPane.ERROR_MESSAGE);
                         }
+
+                        storeFound = true;
+                        break;
+                    } else {
+                        JOptionPane.showMessageDialog(frame,
+                                "Store ID exists but is not a Department.", "Invalid Store Type",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
                 }
+            }
 
-                // Handle cases where store ID is not found
-                if (!storeFound) {
-                    JOptionPane.showMessageDialog(frame, "Store ID not found.", "Store Not Found",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+            // Handle cases where store ID is not found
+            if (!storeFound) {
+                JOptionPane.showMessageDialog(frame, "Store ID not found.", "Store Not Found",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(frame, "Invalid number format. Please check your input.",
-                    "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Invalid Store ID format. Please enter a valid number.", "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
