@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -579,8 +578,7 @@ public class StoreGUI {
         new StoreGUI();
     }
 
-    // FIXME:
-    public void addDepartment() {
+    private void addDepartment() {
         // Retrieve input fields
         String storeIdText = storeIdFieldForDepartment.getText();
         String storeName = storeNameFieldForDepartment.getText();
@@ -647,7 +645,7 @@ public class StoreGUI {
         }
     }
 
-    public void addRetailer() {
+    private void addRetailer() {
         // Retrieve text from fields
         String storeIdText = storeIdFieldForRetailer.getText();
         String storeName = storeNameFieldForRetailer.getText();
@@ -716,7 +714,7 @@ public class StoreGUI {
 
     }
 
-    public void setLoyalltyPoint() {
+    private void setLoyalltyPoint() {
         try {
             // Retrieve and validate input fields
             String storeIdText = storeIdFieldForSetLoyaltyPoint.getText();
@@ -778,7 +776,7 @@ public class StoreGUI {
 
     }
 
-    public void calculateDiscount() {
+    private void calculateDiscount() {
         try {
             // Retrieve and validate input fields
             String storeIdText = storeIdFieldForCalculateDiscount.getText();
@@ -841,7 +839,7 @@ public class StoreGUI {
         }
     }
 
-    public void removeProduct() {
+    private void removeProduct() {
         try {
             // Retrieve and validate input field
             String storeIdText = storeIdFieldForRemoveProduct.getText();
@@ -919,7 +917,7 @@ public class StoreGUI {
         }
     }
 
-    public void clear() {
+    private void clear() {
         boolean isAnyFieldNotEmpty = !storeIdFieldForDepartment.getText().isEmpty() ||
                 !storeNameFieldForDepartment.getText().isEmpty() ||
                 !locationFieldForDepartment.getText().isEmpty() ||
@@ -983,7 +981,7 @@ public class StoreGUI {
         }
     }
 
-    public void display() {
+    private void display() {
         // Check if the stores list is empty
         if (stores.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "No stores have been added.", "Error",
